@@ -1,1 +1,3 @@
-# Portscankun
+# Portscankun  
+指定したポートが開いているか調べるスクリプトです。  
+connect_exメソッドで開いているかを判断しています。  
