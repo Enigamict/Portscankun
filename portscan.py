@@ -33,19 +33,9 @@ def udp():
         send(uport)
         uport.show()
 
-def syn():
-    args = op()
-    if args.syn:
-        synip = input("InputIP>> ")
-        synport = input("InputPort>> ")
-        fsynport = IP(dst=synip)/TCP(flags = "S",sport=0,dport=int(synport))
-        send(fsynport)
-        fsynport.show()
-
     
 
 if __name__ == '__main__':
     op()
     tcp()
     udp()
-    syn()
