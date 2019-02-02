@@ -38,9 +38,9 @@ def syn():
     if args.syn:
         synip = input("InputIP>> ")
         synport = input("InputPort>> ")
-        frame = IP(dst=synip)/TCP(flags = "S",sport=0,dport=int(synport))
-        send(frame)
-        frame.show()
+        fsynport = IP(dst=synip)/TCP(flags = "S",sport=0,dport=int(synport))
+        send(fsynport)
+        fsynport.show()
 
     
 
