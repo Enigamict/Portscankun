@@ -28,7 +28,7 @@ def udp():
     if args.udp:
         udpip = input("InputIP>> ")
         udpport = input("InputPort>> ")
-        uport = IP(dst=udpip)/UDP(sport=int(udpport),dport=int(udpport))
+        uport = IP(dst=udpip)/UDP(sport=1024,dport=int(udpport))
         send(uport)
         uport.show()
 
