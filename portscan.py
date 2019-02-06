@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import socket
 import argparse
-from scapy.all import *
 
 def op():
     parser = argparse.ArgumentParser()
