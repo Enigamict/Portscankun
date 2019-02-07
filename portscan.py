@@ -26,13 +26,11 @@ def tcp():
 def tcpsyn():
     args = op()
     if args.syn:
-        local_ip = socket.gethostbyname_ex(socket.gethostname())
         sikensu = random.randint(0, 1000)
-        print(f"IPlist:{local_ip[2]}")
-        local_ip1 = input("InputLocalIP>> ")
+        local_ip = input("InputLocalIP>> ")
         targetip = input("InputTARGETIP>> ")
         synport = input("InputTARGETPort>> ")
-        syn=IP(src=local_ip1,dst=targetip)/TCP(sport=RandShort(),dport=int(synport),flags='S',seq=sikensu)
+        syn=IP(src=local_ip,dst=targetip)/TCP(sport=RandShort(),dport=int(synport),flags='S',seq=sikensu)
         syns=sr1(syn, timeout=30)
         if str(type(syns)) == "<class 'scapy.layers.inet.IP'>":
             print(f"{synport}:OPEN")
