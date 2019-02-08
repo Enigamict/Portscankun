@@ -27,10 +27,9 @@ def tcpsyn():
     args = op()
     if args.syn:
         sikensu = random.randint(0, 1000)
-        local_ip = input("InputLocalIP>> ")
-        targetip = input("InputTARGETIP>> ")
+        targetip = input("InputTARGETIPorHOSTNAME>> ")
         synport = input("InputTARGETPort>> ")
-        syn=IP(src=local_ip,dst=targetip)/TCP(sport=RandShort(),dport=int(synport),flags='S',seq=sikensu)
+        syn=IP(dst=targetip)/TCP(sport=RandShort(),dport=int(synport),flags='S',seq=sikensu)
         syns=sr1(syn, timeout=30)
         if str(type(syns)) == "<class 'scapy.layers.inet.IP'>":
             print(f"{synport}:OPEN")
