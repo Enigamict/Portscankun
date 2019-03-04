@@ -5,8 +5,10 @@ from scapy.all import *
 
 def op():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--tcp",help="TCPで直接繋いでスキャンします",action="store_true")
-    parser.add_argument("--syn",help="ハーフスキャンします",action="store_true")
+    parser.add_argument("--tcp" ,help="TCPで直接繋いでスキャンします",action="store_true")
+    parser.add_argument("--syn", help="ハーフスキャンします",action="store_true")
+    parser.add_argument("--port", type=int, help="ポート番号を指定")
+    parser.add_argument("--ip", help="IP&ホストを指定")
     args = parser.parse_args()
     return args
 
@@ -14,27 +16,23 @@ def tcp():
     args = op()
     if args.tcp:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcpip = input("InputTARGETIP>> ")
-        tcpport = input("InputTARGETPort>> ")
-        code = sock.connect_ex((tcpip,int(tcpport)))
+        code = sock.connect_ex((args.ip,args.port))
         sock.close()
         if code == 0:
-            print(f"{tcpport}OPEN")
+            print(f"{args.port}/tcp Open")
         if code != 0:
-            print(f"{tcpport}Close")
+            print(f"{args.port}/tcp Close")
 
 def tcpsyn():
     args = op()
     if args.syn:
-        sikensu = random.randint(0, 1000)
-        targetip = input("InputTARGETIPorHOSTNAME>> ")
-        synport = input("InputTARGETPort>> ")
-        syn=IP(dst=targetip)/TCP(sport=RandShort(),dport=int(synport),flags='S',seq=sikensu)
+        sikens = random.randint(0, 1000)
+        syn=IP(dst=args.ip)/TCP(sport=RandShort(),dport=args.port,flags='S',seq=sikens)
         syns=sr1(syn, timeout=30)
         if str(type(syns)) == "<class 'scapy.layers.inet.IP'>":
-            print(f"{synport}:OPEN")
+            print(f"{args.port}/tcp Open")
         else:
-            print(f"{synport}:ClOSE")
+            print(f"{args.port}/tcp Close")
 
     
 
