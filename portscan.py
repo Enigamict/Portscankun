@@ -28,7 +28,7 @@ def tcpsyn():
     if args.syn:
         sikens = random.randint(0, 1000)
         syn=IP(dst=args.ip)/TCP(sport=RandShort(),dport=args.port,flags='S',seq=sikens)
-        syns=sr1(syn, timeout=30)
+        syns=sr1(syn, timeout=5)
         if str(type(syns)) == "<class 'scapy.layers.inet.IP'>":
             print(f"{args.port}/tcp Open")
         else:
