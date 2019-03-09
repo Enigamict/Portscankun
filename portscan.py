@@ -12,31 +12,27 @@ def op():
     args = parser.parse_args()
     return args
 
-def tcp():
-    args = op()
-    if args.tcp:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        code = sock.connect_ex((args.ip,args.port))
-        sock.close()
-        if code == 0:
-            print(f"{args.port}/tcp Open")
-        if code != 0:
-            print(f"{args.port}/tcp Close")
+args = op()
 
-def tcpsyn():
-    args = op()
-    if args.syn:
-        sikens = random.randint(0, 1000)
-        syn=IP(dst=args.ip)/TCP(sport=RandShort(),dport=args.port,flags='S',seq=sikens)
-        syns=sr1(syn, timeout=5)
-        if str(type(syns)) == "<class 'scapy.layers.inet.IP'>":
-            print(f"{args.port}/tcp Open")
-        else:
-            print(f"{args.port}/tcp Close")
+if args.tcp:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    code = sock.connect_ex((args.ip,args.port))
+    sock.close()
+    if code == 0:
+        print(f"{args.port}/tcp Open")
+    if code != 0:
+        print(f"{args.port}/tcp Close")
 
-    
+if args.syn:
+    sikens = random.randint(0, 1000)
+    syn=IP(dst=args.ip)/TCP(sport=RandShort(),dport=args.port,flags='S',seq=sikens)
+    syns=sr1(syn, timeout=5)
+    if str(type(syns)) == "<class 'NoneType'>":
+        print("f{args.port}/filtered")
+    elif syns[TCP].flags == "SA":
+        print(f"{args.port}/tcp Open")
+    elif syns[TCP].flags == "RA":
+        print(f"{args.port}/tcp Closed")
 
 if __name__ == '__main__':
     op()
-    tcp()
-    tcpsyn()
