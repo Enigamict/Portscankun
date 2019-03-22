@@ -28,7 +28,7 @@ if args.syn:
     syn=IP(dst=args.ip)/TCP(sport=RandShort(),dport=args.port,flags='S',seq=sikens)
     syns=sr1(syn, timeout=5)
     if str(type(syns)) == "<class 'NoneType'>":
-        print("f{args.port}/filtered")
+        print(f"{args.port}/filtered")
     elif syns[TCP].flags == "SA":
         print(f"{args.port}/tcp Open")
     elif syns[TCP].flags == "RA":
