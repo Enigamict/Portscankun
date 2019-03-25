@@ -19,7 +19,7 @@ def tcp(ports1):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         code = sock.connect_ex((args.ip, ports1))
         if code is 0:
-            print(f"{ports1}:OPEN")
+            print(f"{ports1}/tcp Open")
 
 def syn(ports):
     if args.syn:
