@@ -9,6 +9,7 @@ def op():
     parser.add_argument("--tcp",help="TCPで直接繋いでスキャンします",action="store_true")
     parser.add_argument("--syn",help="ハーフスキャンします",action="store_true")
     parser.add_argument("--ip", help="IP&ホストを指定")
+    parser.add_argument("--port", help="スキャンする範囲を指定")
     args = parser.parse_args()
     return args
 
@@ -33,7 +34,7 @@ def syn(ports):
         elif syns[TCP].flags == "RA":
             print(f"{ports}/tcp Closed")
 
-for port in range(1, 9999):
+for port in range(1, args.port):
     thread = threading.Thread(target=syn, args=(port, ))
     thread1 = threading.Thread(target=tcp, args=(port, ))
     thread.start()
